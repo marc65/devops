@@ -25,4 +25,4 @@ jobs:
         
       # Enfin, construisez et testez votre application avec la commande appropriée
       - name: Build and test with Maven
-        run: mvn clean install # Vous devrez utiliser la commande réelle pour construire votre application avec Maven
+        run: mvn -f pom.xml clean install # Spécifiez explicitement le chemin vers le fichier POM
