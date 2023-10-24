@@ -25,7 +25,7 @@ jobs:
       - name: Set up Maven
         run: mvn -N io.takari:maven:0.7.7:wrapper
       - name: Set working directory
-        run: cd Backend-API2
+        run: cd backend_API2
         
       # Enfin, construisez et testez votre application avec la commande appropriée
       - name: Build and test with Maven
