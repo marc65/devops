@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+  backend:
+    build: ./backend_API2
+    container_name: backend
+    networks:
+      - app-network
+    depends_on:
+      - database
+
+  adminer:
+    image: adminer
+    ports:
+      - "8082:8080"
+    networks:
+      - app-network
+
+  database:
+    build: ./database
+    container_name: database
+    networks:
+      - app-network
+
+  httpd:
+    build: ./backend_API2/html
+    container_name: httpd
+    ports:
+      - "8081:80"
+    networks:
+      - app-network
+    depends_on:
+      - backend
+
+networks:
+  app-network:
