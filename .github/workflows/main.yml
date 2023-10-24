@@ -13,9 +13,6 @@ jobs:
     steps:
       # Récupérez votre code GitHub en utilisant actions/checkout@v2.5.0
       - uses: actions/checkout@v2.5.0
-      
-      - name: Set working directory
-        run: cd ./backend_API2/
 
       # Configurez le JDK 17 avec actions/setup-java@v3
       - name: Set up JDK 17
@@ -26,4 +23,4 @@ jobs:
 
       # Enfin, construisez et testez votre application avec la commande appropriée
       - name: Build and test with Maven
-        run: mvn -f pom.xml clean install # Spécifiez explicitement le chemin vers le fichier POM
+        run: mvn -f ./backend_API2/pom.xml clean install # Spécifiez explicitement le chemin vers le fichier POM
