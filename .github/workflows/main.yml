@@ -21,8 +21,8 @@ jobs:
           java-version: 17
           distribution: 'adopt' # Spécifiez la distribution (dans cet exemple, j'utilise AdoptOpenJDK)        
       - name: Set working directory
-        run: cd backend_API2
-        
+        run: cd devops/backend_API2
+
       # Enfin, construisez et testez votre application avec la commande appropriée
       - name: Build and test with Maven
         run: mvn -f pom.xml clean install # Spécifiez explicitement le chemin vers le fichier POM
