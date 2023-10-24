@@ -10,6 +10,9 @@ on:
 jobs:
   test-backend: 
     runs-on: ubuntu-22.04
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
     steps:
       # Récupérez votre code GitHub en utilisant actions/checkout@v2.5.0
       - uses: actions/checkout@v2.5.0
