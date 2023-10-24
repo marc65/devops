@@ -19,13 +19,9 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 17
-          distribution: 'adopt' # Spécifiez la distribution (dans cet exemple, j'utilise AdoptOpenJDK)
-     
-     # Définissez le répertoire de travail de Maven
-      - name: Set up Maven
-        run: mvn -N io.takari:maven:0.7.7:wrapper
+          distribution: 'adopt' # Spécifiez la distribution (dans cet exemple, j'utilise AdoptOpenJDK)        
       - name: Set working directory
-        run: cd ../../backend_API2
+        run: cd backend_API2
         
       # Enfin, construisez et testez votre application avec la commande appropriée
       - name: Build and test with Maven
