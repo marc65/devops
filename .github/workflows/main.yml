@@ -8,6 +8,7 @@ on:
   pull_request:
 
 jobs:
+
   test-backend: 
     runs-on: ubuntu-22.04
     env:
@@ -27,3 +28,38 @@ jobs:
       # Enfin, construisez et testez votre application avec la commande appropriée
       - name: Build and test with Maven
         run: mvn -f ./backend_API2/pom.xml clean install # Spécifiez explicitement le chemin vers le fichier POM
+
+# define job to build and publish docker image
+  build-and-push-docker-image:
+   needs: test-backend
+ # run only when code is compiling and tests are passing
+   runs-on: ubuntu-22.04
+
+ # steps to perform in job
+   steps:
+     - name: Checkout code
+       uses: actions/checkout@v2.5.0
+  
+     - name: Build image and push backend
+       uses: docker/build-push-action@v3
+       with:
+         # relative path to the place where source code with Dockerfile is located
+         context: ./simple-api
+         # Note: tags has to be all lower-case
+         tags:  ${{secrets.DOCKER_USERNAME}}/tp-devops/simple-api
+  
+     - name: Build image and push database
+       uses: docker/build-push-action@v3
+       with:
+         # relative path to the place where source code with Dockerfile is located
+         context: ./simple-api
+         # Note: tags has to be all lower-case
+         tags:  ${{secrets.DOCKER_USERNAME}}/tp-devops/simple-api  
+     - name: Build image and push httpd
+       uses: docker/build-push-action@v3
+       with:
+         # relative path to the place where source code with Dockerfile is located
+         context: ./simple-api
+         # Note: tags has to be all lower-case
+         tags:  ${{secrets.DOCKER_USERNAME}}/tp-devops/simple-api
+  
