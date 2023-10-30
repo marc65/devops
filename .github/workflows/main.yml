@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-22.04
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
     steps:
       # Récupérez votre code GitHub en utilisant actions/checkout@v2.5.0
       - uses: actions/checkout@v2.5.0
@@ -39,6 +39,10 @@ jobs:
    steps:
      - name: Checkout code
        uses: actions/checkout@v2.5.0
+
+     - name: Login to DockerHub
+       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+
   
      - name: Build image and push backend
        uses: docker/build-push-action@v3
@@ -47,19 +51,28 @@ jobs:
          context: ./backend_API2
          # Note: tags has to be all lower-case
          tags:  ${{secrets.DOCKER_USERNAME}}/tp-devops/simple-api
-  
+      # build on feature branches, push only on main branch
+         push: ${{ github.ref == 'refs/heads/main' }}
+
+         
      - name: Build image and push database
        uses: docker/build-push-action@v3
        with:
          # relative path to the place where source code with Dockerfile is located
-         context: ./backend_API2
+         context: ./database
          # Note: tags has to be all lower-case
          tags:  ${{secrets.DOCKER_USERNAME}}/tp-devops/simple-api  
+      # build on feature branches, push only on main branch
+         push: ${{ github.ref == 'refs/heads/main' }}
+
+         
      - name: Build image and push httpd
        uses: docker/build-push-action@v3
        with:
          # relative path to the place where source code with Dockerfile is located
-         context: ./backend_API2
+         context: ./backend_API2/html
          # Note: tags has to be all lower-case
          tags:  ${{secrets.DOCKER_USERNAME}}/tp-devops/simple-api
+               # build on feature branches, push only on main branch
+         push: ${{ github.ref == 'refs/heads/main' }}
   
