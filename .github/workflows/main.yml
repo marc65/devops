@@ -6,12 +6,15 @@ on:
       - main
       - develop
   pull_request:
+  workflow_run:
+    workflows: ["test-backend"]
+    types:
+      - completed
 
 jobs:
 
   test-backend: 
     runs-on: ubuntu-22.04
-    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' }}
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -35,11 +38,12 @@ jobs:
 
 # define job to build and publish docker image
   build-and-push-docker-image:
+   runs-on: ubuntu-22.04
+   #on-success: test-backend
+
    needs: test-backend
  # run only when code is compiling and tests are passing
-   runs-on: ubuntu-22.04
    
-   if: ${{ github.ref == 'refs/heads/main' }}
  # steps to perform in job
    steps:
      - name: Checkout code
