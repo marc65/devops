@@ -27,8 +27,8 @@ jobs:
 
       # Enfin, construisez et testez votre application avec la commande appropriée
       - name: Build and test with Maven
-        run: mvn -f ./backend_API2/pom.xml clean install # Spécifiez explicitement le chemin vers le fichier POM
-
+        #run: mvn -f ./backend_API2/pom.xml clean install # Spécifiez explicitement le chemin vers le fichier POM
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=devops-2023 -Dsonar.organization=devops-school -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ./simple-api/pom.xml
 # define job to build and publish docker image
   build-and-push-docker-image:
    needs: test-backend
