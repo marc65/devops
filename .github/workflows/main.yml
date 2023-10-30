@@ -11,6 +11,7 @@ jobs:
 
   test-backend: 
     runs-on: ubuntu-22.04
+    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' }}
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -25,16 +26,20 @@ jobs:
           java-version: 17
           distribution: 'adopt' # Spécifiez la distribution (dans cet exemple, j'utilise AdoptOpenJDK)        
 
+
       # Enfin, construisez et testez votre application avec la commande appropriée
       - name: Build and test with Maven
         #run: mvn -f ./backend_API2/pom.xml clean install # Spécifiez explicitement le chemin vers le fichier POM
         run: mvn -B verify sonar:sonar -Dsonar.projectKey=marc65_devops -Dsonar.organization=marc65 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ./backend_API2/pom.xml
+
+
 # define job to build and publish docker image
   build-and-push-docker-image:
    needs: test-backend
  # run only when code is compiling and tests are passing
    runs-on: ubuntu-22.04
-
+   
+   if: ${{ github.ref == 'refs/heads/main' }}
  # steps to perform in job
    steps:
      - name: Checkout code
