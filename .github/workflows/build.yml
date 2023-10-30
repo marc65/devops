@@ -1,11 +1,11 @@
 name: build
 on:
      workflow_run:
-     workflows: ["test-backend"]
-     types: [requested] #compelted
-     branches: 
-     - 'main'
-     conclusions: success
+          workflows: ["test-backend"]
+          types: [completed] #compelted
+          branches: 
+               - 'main'
+       #conclusions: success
 
 jobs:
 # define job to build and publish docker image
