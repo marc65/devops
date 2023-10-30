@@ -2,7 +2,7 @@ name: build
 on:
      workflow_run:
      workflows: ["test-backend"]
-     types: [requested]
+     types: [requested] #compelted
      branches: 
      - 'main'
      conclusions: success
@@ -10,7 +10,7 @@ on:
 jobs:
 # define job to build and publish docker image
   build-and-push-docker-image:
-   needs: test-backend
+   #needs: test-backend
    runs-on: ubuntu-22.04
    #on-success: test-backend
  # run only when code is compiling and tests are passing
